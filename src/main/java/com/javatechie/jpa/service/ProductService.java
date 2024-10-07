@@ -2,14 +2,13 @@ package com.javatechie.jpa.service;
 
 import com.javatechie.jpa.entity.Product;
 import com.javatechie.jpa.repository.ProductRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -47,6 +46,8 @@ public class ProductService {
 
     public Page<Product> findProductsWithPaginationAndSorting(int offset,int pageSize,String field){
         Page<Product> products = repository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(field)));
+        //Another way to implement pagination and sorting.
+        Page<Product> products2 = repository.findAll(PageRequest.of(offset, pageSize, Sort.by(field)));
         return  products;
     }
 
